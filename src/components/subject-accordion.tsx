@@ -24,6 +24,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
         const completedTopics = subject.topics.filter((t) => t.completed).length;
         const totalTopics = subject.topics.length;
         const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
+        const Icon = subject.icon;
 
         return (
           <AccordionItem value={subject.id} key={subject.id} className="border-b-0">
@@ -31,7 +32,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
               <AccordionTrigger className="w-full text-left hover:no-underline p-0">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-4">
-                    <subject.icon className="h-6 w-6 text-primary" />
+                    {Icon && <Icon className="h-6 w-6 text-primary" />}
                     <div className="flex flex-col items-start">
                         <span className="font-headline font-semibold text-lg text-card-foreground">
                             {subject.name}
