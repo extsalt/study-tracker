@@ -20,26 +20,46 @@ export default function Home() {
   const handleTopicToggle = useCallback((subjectId: string, topicId: string, completed: boolean) => {
     const newSubjects = subjects.map((subject) => {
       if (subject.id === subjectId) {
-        const newTopics = subject.topics.map(topic => {
-            const findAndToggle = (t: Topic): Topic => {
-                if (t.id === topicId) {
-                    const toggleChildren = (childTopics: Topic[] | undefined, status: boolean): Topic[] | undefined => {
-                        return childTopics?.map(child => ({
-                            ...child,
-                            completed: status,
-                            subTopics: toggleChildren(child.subTopics, status)
-                        }));
-                    }
-                    return { ...t, completed, subTopics: toggleChildren(t.subTopics, completed) };
+        
+        // Recursive function to update a topic and its children
+        const updateTopicsRecursively = (topics: Topic[]): Topic[] => {
+          return topics.map(topic => {
+            // Check if this is the topic we're looking for
+            if (topic.id === topicId) {
+              // Function to toggle all children
+              const toggleChildren = (childTopics: Topic[] | undefined, status: boolean): Topic[] | undefined => {
+                return childTopics?.map(child => ({
+                  ...child,
+                  completed: status,
+                  subTopics: toggleChildren(child.subTopics, status)
+                }));
+              };
+              return { ...topic, completed, subTopics: toggleChildren(topic.subTopics, completed) };
+            }
+            // If not the target topic, check its sub-topics
+            if (topic.subTopics) {
+              return { ...topic, subTopics: updateTopicsRecursively(topic.subTopics) };
+            }
+            // Return topic as is if no match and no sub-topics
+            return topic;
+          });
+        };
+        
+        const newTopics = updateTopicsRecursively(subject.topics);
+
+        // After updating, we need to check parent statuses
+        const checkParentStatus = (topics: Topic[]): Topic[] => {
+            return topics.map(topic => {
+                if (topic.subTopics && topic.subTopics.length > 0) {
+                    const updatedSubTopics = checkParentStatus(topic.subTopics);
+                    const allSubtopicsCompleted = updatedSubTopics.every(sub => sub.completed);
+                    return { ...topic, subTopics: updatedSubTopics, completed: allSubtopicsCompleted };
                 }
-                if (t.subTopics) {
-                    return { ...t, subTopics: t.subTopics.map(findAndToggle) };
-                }
-                return t;
-            };
-            return findAndToggle(topic);
-        });
-        return { ...subject, topics: newTopics };
+                return topic;
+            });
+        };
+
+        return { ...subject, topics: checkParentStatus(newTopics) };
       }
       return subject;
     });
@@ -62,11 +82,9 @@ export default function Home() {
 
     const countTopics = (topics: Topic[]) => {
       topics.forEach(topic => {
-        if (!topic.subTopics || topic.subTopics.length === 0) {
-            totalTopics++;
-            if (topic.completed) {
-                completedTopics++;
-            }
+        totalTopics++;
+        if (topic.completed) {
+            completedTopics++;
         }
         if (topic.subTopics) {
           countTopics(topic.subTopics);
@@ -76,36 +94,7 @@ export default function Home() {
     
     subjects.forEach(subject => countTopics(subject.topics));
     
-    const countCompletedTopicsOnly = (topics: Topic[]) => {
-        let count = 0;
-        topics.forEach(topic => {
-            if (topic.completed) {
-                count++;
-            }
-            if(topic.subTopics){
-                count += countCompletedTopicsOnly(topic.subTopics);
-            }
-        });
-        return count;
-    };
-
-    let grandTotalTopics = 0;
-    const countAllTopics = (topics: Topic[]) => {
-        let count = 0;
-        topics.forEach(topic => {
-            count++;
-            if(topic.subTopics){
-                count += countAllTopics(topic.subTopics);
-            }
-        });
-        return count;
-    }
-    subjects.forEach(subject => grandTotalTopics += countAllTopics(subject.topics));
-    let grandCompletedTopics = 0;
-    subjects.forEach(subject => grandCompletedTopics += countCompletedTopicsOnly(subject.topics));
-
-
-    const progress = grandTotalTopics > 0 ? (grandCompletedTopics / grandTotalTopics) * 100 : 0;
+    const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
 
     let inProgressSubjects = 0;
     let backlogSubjects = 0;
@@ -124,14 +113,14 @@ export default function Home() {
 
       if (subjectCompleted > 0 && subjectCompleted < subjectTotal) {
         inProgressSubjects++;
-      } else if (subjectCompleted === 0) {
+      } else if (subjectCompleted === 0 && subjectTotal > 0) {
         backlogSubjects++;
       }
     });
 
     return {
-      totalTopics: grandTotalTopics,
-      completedTopics: grandCompletedTopics,
+      totalTopics: totalTopics,
+      completedTopics: completedTopics,
       progress,
       inProgressSubjects,
       backlogSubjects,

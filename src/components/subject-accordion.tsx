@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -22,47 +23,54 @@ const iconMap: Record<IconName, React.ComponentType<LucideProps>> = {
   Shield,
 };
 
-interface SubjectAccordionProps {
-  subjects: SubjectData[];
+interface TopicItemProps {
+  topic: Topic;
+  subjectId: string;
   onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void;
+  isSubTopic: boolean;
 }
 
-const TopicItem = ({ topic, subjectId, onTopicToggle }: { topic: Topic, subjectId: string, onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void }) => {
-  
-  const renderTopic = (topic: Topic, isSubTopic: boolean) => {
-    return (
-      <div key={topic.id} className="flex flex-col">
-        <div className={`flex items-center space-x-3 rounded-md p-2 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
-          <Checkbox
-            id={`${subjectId}-${topic.id}`}
-            checked={topic.completed}
-            onCheckedChange={(checked) =>
-              onTopicToggle(subjectId, topic.id, !!checked)
-            }
-          />
-          <Label
-            htmlFor={`${subjectId}-${topic.id}`}
-            className={`text-sm cursor-pointer ${
-              topic.completed ? "text-muted-foreground line-through" : ""
-            }`}
-          >
-            {topic.name}
-          </Label>
-        </div>
-        {topic.subTopics && topic.subTopics.length > 0 && (
-          <div className="space-y-1">
-            {topic.subTopics.map((subTopic) => renderTopic(subTopic, true))}
-          </div>
-        )}
-      </div>
-    );
-  };
+const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic }: TopicItemProps) => {
+  const hasSubTopics = topic.subTopics && topic.subTopics.length > 0;
 
-  return renderTopic(topic, false);
+  return (
+    <div className="flex flex-col">
+      <div className={`flex items-center space-x-3 rounded-md p-2 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
+        <Checkbox
+          id={`${subjectId}-${topic.id}`}
+          checked={topic.completed}
+          onCheckedChange={(checked) =>
+            onTopicToggle(subjectId, topic.id, !!checked)
+          }
+          aria-label={`Mark ${topic.name} as completed`}
+        />
+        <Label
+          htmlFor={`${subjectId}-${topic.id}`}
+          className={`text-sm cursor-pointer ${
+            topic.completed ? "text-muted-foreground line-through" : ""
+          }`}
+        >
+          {topic.name}
+        </Label>
+      </div>
+      {hasSubTopics && (
+        <div className="space-y-1">
+          {topic.subTopics?.map((subTopic) => (
+            <TopicItem
+              key={subTopic.id}
+              topic={subTopic}
+              subjectId={subjectId}
+              onTopicToggle={onTopicToggle}
+              isSubTopic={true}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
-
-export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAccordionProps) {
+export default function SubjectAccordion({ subjects, onTopicToggle }: { subjects: SubjectData[], onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void }) {
   return (
     <Accordion type="multiple" className="w-full">
       {subjects.map((subject) => {
@@ -102,7 +110,13 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
               <AccordionContent className="pt-6">
                 <div className="space-y-2">
                   {subject.topics.map((topic) => (
-                    <TopicItem key={topic.id} topic={topic} subjectId={subject.id} onTopicToggle={onTopicToggle} />
+                    <TopicItem 
+                        key={topic.id} 
+                        topic={topic} 
+                        subjectId={subject.id} 
+                        onTopicToggle={onTopicToggle}
+                        isSubTopic={false}
+                    />
                   ))}
                 </div>
               </AccordionContent>
