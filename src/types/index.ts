@@ -9,7 +9,7 @@ export interface Topic {
   subTopics?: Topic[];
 }
 
-export type IconName = "BookOpen" | "Landmark" | "Scale" | "Globe" | "ScrollText";
+export type IconName = "BookOpen" | "Landmark" | "Scale" | "Globe" | "ScrollText" | "Shield";
 
 export interface SubjectData {
   id: string;

@@ -104,6 +104,32 @@ export const initialData: SubjectData[] = [
     ],
   },
   {
+    id: "ir",
+    name: "International Relations",
+    icon: "Globe",
+    topics: [
+        { id: "ir-1", name: "India and its Neighborhood Relations", completed: false },
+        { id: "ir-2", name: "Bilateral, Regional and Global Groupings and Agreements involving India", completed: false },
+        { id: "ir-3", name: "Effect of Policies and Politics of Developed & Developing Countries on India's interests", completed: false },
+        { id: "ir-4", name: "Indian Diaspora", completed: false },
+        { id: "ir-5", name: "Important International Institutions, agencies and fora - their Structure, Mandate", completed: false },
+    ],
+  },
+  {
+    id: "is",
+    name: "Internal Security",
+    icon: "Shield",
+    topics: [
+        { id: "is-1", name: "Linkages between Development and Spread of Extremism", completed: false },
+        { id: "is-2", name: "Role of External State and Non-state Actors in creating challenges to Internal Security", completed: false },
+        { id: "is-3", name: "Challenges to Internal Security through Communication Networks, Role of Media and Social Networking Sites", completed: false },
+        { id: "is-4", name: "Basics of Cyber Security; Money-Laundering and its prevention", completed: false },
+        { id: "is-5", name: "Security Challenges and their Management in Border Areas", completed: false },
+        { id: "is-6", name: "Linkages of Organized Crime with Terrorism", completed: false },
+        { id: "is-7", name: "Various Security Forces and Agencies and their Mandate", completed: false },
+    ],
+  },
+  {
     id: "csat",
     name: "CSAT",
     icon: "BookOpen",

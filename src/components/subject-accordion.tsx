@@ -12,7 +12,7 @@ import { Progress } from "@/components/ui/progress";
 import type { SubjectData, Topic, IconName } from "@/types";
 import { Label } from "./ui/label";
 import React from "react";
-import { BookOpen, Landmark, Scale, Globe, ScrollText, type LucideProps } from "lucide-react";
+import { BookOpen, Landmark, Scale, Globe, ScrollText, Shield, type LucideProps } from "lucide-react";
 
 const iconMap: Record<IconName, React.ComponentType<LucideProps>> = {
   BookOpen,
@@ -20,6 +20,7 @@ const iconMap: Record<IconName, React.ComponentType<LucideProps>> = {
   Scale,
   Globe,
   ScrollText,
+  Shield,
 };
 
 interface SubjectAccordionProps {
