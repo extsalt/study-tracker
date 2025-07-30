@@ -10,6 +10,6 @@ export interface Topic {
 export interface Subject {
   id: string;
   name: string;
-  icon: () => React.ReactElement;
+  icon: React.ReactElement;
   topics: Topic[];
 }

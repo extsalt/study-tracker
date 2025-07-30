@@ -26,8 +26,8 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
         const totalTopics = subject.topics.length;
         const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
         
-        // Clone the element returned by the icon function to add classes
-        const iconElement = subject.icon ? React.cloneElement(subject.icon(), {
+        // Clone the element to add classes
+        const iconElement = subject.icon ? React.cloneElement(subject.icon, {
           className: "h-6 w-6 text-primary",
         }) : null;
 

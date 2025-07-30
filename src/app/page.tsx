@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { initialData } from "@/data/initial-data";
+import { initialData } from "@/data/initial-data.tsx";
 import type { Subject } from "@/types";
 import ProgressChart from "@/components/progress-chart";
 import SubjectAccordion from "@/components/subject-accordion";
