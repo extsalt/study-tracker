@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import type { SubjectData, IconName } from "@/types";
+import type { SubjectData, Topic, IconName } from "@/types";
 import { Label } from "./ui/label";
 import React from "react";
 import { BookOpen, Landmark, Scale, Globe, ScrollText, type LucideProps } from "lucide-react";
@@ -27,12 +27,53 @@ interface SubjectAccordionProps {
   onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void;
 }
 
+const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { topic: Topic, subjectId: string, onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void, isSubTopic?: boolean }) => {
+  return (
+    <div className="flex flex-col">
+      <div className={`flex items-center space-x-3 rounded-md p-3 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
+        <Checkbox
+          id={`${subjectId}-${topic.id}`}
+          checked={topic.completed}
+          onCheckedChange={(checked) =>
+            onTopicToggle(subjectId, topic.id, !!checked)
+          }
+        />
+        <Label
+          htmlFor={`${subjectId}-${topic.id}`}
+          className={`text-sm ${
+            topic.completed ? "text-muted-foreground line-through" : ""
+          }`}
+        >
+          {topic.name}
+        </Label>
+      </div>
+      {topic.subTopics && (
+        <div className="space-y-2">
+          {topic.subTopics.map((subTopic) => (
+            <TopicItem key={subTopic.id} topic={subTopic} subjectId={subjectId} onTopicToggle={onTopicToggle} isSubTopic={true} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
 export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAccordionProps) {
   return (
     <Accordion type="multiple" className="w-full">
       {subjects.map((subject) => {
-        const completedTopics = subject.topics.filter((t) => t.completed).length;
-        const totalTopics = subject.topics.length;
+        let completedTopics = 0;
+        let totalTopics = 0;
+        const countTopics = (topics: Topic[]) => {
+          topics.forEach(topic => {
+            totalTopics++;
+            if (topic.completed) completedTopics++;
+            if (topic.subTopics) countTopics(topic.subTopics);
+          });
+        };
+        countTopics(subject.topics);
+
         const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
         const Icon = iconMap[subject.icon];
         
@@ -58,23 +99,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
               <AccordionContent className="pt-6">
                 <div className="space-y-4">
                   {subject.topics.map((topic) => (
-                    <div key={topic.id} className="flex items-center space-x-3 rounded-md p-3 transition-colors hover:bg-secondary/50">
-                      <Checkbox
-                        id={`${subject.id}-${topic.id}`}
-                        checked={topic.completed}
-                        onCheckedChange={(checked) =>
-                          onTopicToggle(subject.id, topic.id, !!checked)
-                        }
-                      />
-                      <Label
-                        htmlFor={`${subject.id}-${topic.id}`}
-                        className={`text-sm ${
-                          topic.completed ? "text-muted-foreground line-through" : ""
-                        }`}
-                      >
-                        {topic.name}
-                      </Label>
-                    </div>
+                    <TopicItem key={topic.id} topic={topic} subjectId={subject.id} onTopicToggle={onTopicToggle} />
                   ))}
                 </div>
               </AccordionContent>

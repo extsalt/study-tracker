@@ -1,10 +1,10 @@
 
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { initialData } from "@/data/initial-data.tsx";
-import type { SubjectData } from "@/types";
+import type { SubjectData, Topic } from "@/types";
 import ProgressChart from "@/components/progress-chart";
 import SubjectAccordion from "@/components/subject-accordion";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,21 +17,27 @@ export default function Home() {
     setIsClient(true);
   }, []);
 
-  const handleTopicToggle = (subjectId: string, topicId: string, completed: boolean) => {
+  const handleTopicToggle = useCallback((subjectId: string, topicId: string, completed: boolean) => {
     const newSubjects = subjects.map((subject) => {
       if (subject.id === subjectId) {
-        const newTopics = subject.topics.map((topic) => {
-          if (topic.id === topicId) {
-            return { ...topic, completed };
-          }
-          return topic;
+        const newTopics = subject.topics.map(topic => {
+            const findAndToggle = (t: Topic): Topic => {
+                if (t.id === topicId) {
+                    return { ...t, completed };
+                }
+                if (t.subTopics) {
+                    return { ...t, subTopics: t.subTopics.map(findAndToggle) };
+                }
+                return t;
+            };
+            return findAndToggle(topic);
         });
         return { ...subject, topics: newTopics };
       }
       return subject;
     });
     setSubjects(newSubjects);
-  };
+  }, [subjects, setSubjects]);
 
   const stats = useMemo(() => {
     if (!isClient) {
@@ -43,21 +49,44 @@ export default function Home() {
         backlogSubjects: 0,
       };
     }
-    const totalTopics = subjects.reduce((acc, subject) => acc + subject.topics.length, 0);
-    const completedTopics = subjects.reduce(
-      (acc, subject) => acc + subject.topics.filter((t) => t.completed).length,
-      0
-    );
+    
+    let totalTopics = 0;
+    let completedTopics = 0;
+
+    const countTopics = (topics: Topic[]) => {
+      topics.forEach(topic => {
+        totalTopics++;
+        if (topic.completed) {
+          completedTopics++;
+        }
+        if (topic.subTopics) {
+          countTopics(topic.subTopics);
+        }
+      });
+    };
+
+    subjects.forEach(subject => countTopics(subject.topics));
+
     const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
 
     let inProgressSubjects = 0;
     let backlogSubjects = 0;
 
     subjects.forEach((subject) => {
-      const completedCount = subject.topics.filter((t) => t.completed).length;
-      if (completedCount > 0 && completedCount < subject.topics.length) {
+      let subjectTotal = 0;
+      let subjectCompleted = 0;
+      const countSubjectTopics = (topics: Topic[]) => {
+        topics.forEach(topic => {
+          subjectTotal++;
+          if (topic.completed) subjectCompleted++;
+          if (topic.subTopics) countSubjectTopics(topic.subTopics);
+        });
+      };
+      countSubjectTopics(subject.topics);
+
+      if (subjectCompleted > 0 && subjectCompleted < subjectTotal) {
         inProgressSubjects++;
-      } else if (completedCount === 0) {
+      } else if (subjectCompleted === 0) {
         backlogSubjects++;
       }
     });

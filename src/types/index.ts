@@ -6,6 +6,7 @@ export interface Topic {
   id: string;
   name: string;
   completed: boolean;
+  subTopics?: Topic[];
 }
 
 export type IconName = "BookOpen" | "Landmark" | "Scale" | "Globe" | "ScrollText";
