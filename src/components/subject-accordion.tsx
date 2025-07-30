@@ -48,10 +48,16 @@ const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { to
           {topic.name}
         </Label>
       </div>
-      {topic.subTopics && (
-        <div className="space-y-1 pl-6">
+      {topic.subTopics && topic.subTopics.length > 0 && (
+        <div className="pl-6 space-y-1">
           {topic.subTopics.map((subTopic) => (
-            <TopicItem key={subTopic.id} topic={subTopic} subjectId={subjectId} onTopicToggle={onTopicToggle} isSubTopic={true} />
+            <TopicItem 
+              key={subTopic.id} 
+              topic={subTopic} 
+              subjectId={subjectId} 
+              onTopicToggle={onTopicToggle} 
+              isSubTopic={true} 
+            />
           ))}
         </div>
       )}
