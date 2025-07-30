@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -28,41 +27,38 @@ interface SubjectAccordionProps {
   onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void;
 }
 
-const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { topic: Topic, subjectId: string, onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void, isSubTopic?: boolean }) => {
-  return (
-    <div className="flex flex-col">
-      <div className={`flex items-center space-x-3 rounded-md p-2 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
-        <Checkbox
-          id={`${subjectId}-${topic.id}`}
-          checked={topic.completed}
-          onCheckedChange={(checked) =>
-            onTopicToggle(subjectId, topic.id, !!checked)
-          }
-        />
-        <Label
-          htmlFor={`${subjectId}-${topic.id}`}
-          className={`text-sm cursor-pointer ${
-            topic.completed ? "text-muted-foreground line-through" : ""
-          }`}
-        >
-          {topic.name}
-        </Label>
-      </div>
-      {topic.subTopics && topic.subTopics.length > 0 && (
-        <div className="pl-6 space-y-1">
-          {topic.subTopics.map((subTopic) => (
-            <TopicItem 
-              key={subTopic.id} 
-              topic={subTopic} 
-              subjectId={subjectId} 
-              onTopicToggle={onTopicToggle} 
-              isSubTopic={true} 
-            />
-          ))}
+const TopicItem = ({ topic, subjectId, onTopicToggle }: { topic: Topic, subjectId: string, onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void }) => {
+  
+  const renderTopic = (topic: Topic, isSubTopic: boolean) => {
+    return (
+      <div key={topic.id} className="flex flex-col">
+        <div className={`flex items-center space-x-3 rounded-md p-2 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
+          <Checkbox
+            id={`${subjectId}-${topic.id}`}
+            checked={topic.completed}
+            onCheckedChange={(checked) =>
+              onTopicToggle(subjectId, topic.id, !!checked)
+            }
+          />
+          <Label
+            htmlFor={`${subjectId}-${topic.id}`}
+            className={`text-sm cursor-pointer ${
+              topic.completed ? "text-muted-foreground line-through" : ""
+            }`}
+          >
+            {topic.name}
+          </Label>
         </div>
-      )}
-    </div>
-  );
+        {topic.subTopics && topic.subTopics.length > 0 && (
+          <div className="space-y-1">
+            {topic.subTopics.map((subTopic) => renderTopic(subTopic, true))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return renderTopic(topic, false);
 };
 
 
