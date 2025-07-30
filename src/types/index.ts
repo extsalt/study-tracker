@@ -1,5 +1,5 @@
 
-import type { LucideIcon } from 'lucide-react';
+import type React from 'react';
 
 export interface Topic {
   id: string;
@@ -10,6 +10,6 @@ export interface Topic {
 export interface Subject {
   id: string;
   name: string;
-  icon: LucideIcon;
+  icon: () => React.ReactElement;
   topics: Topic[];
 }
