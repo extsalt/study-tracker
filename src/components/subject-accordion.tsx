@@ -26,18 +26,13 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
         const totalTopics = subject.topics.length;
         const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
         
-        // Clone the element to add classes
-        const iconElement = subject.icon ? React.cloneElement(subject.icon, {
-          className: "h-6 w-6 text-primary",
-        }) : null;
-
         return (
           <AccordionItem value={subject.id} key={subject.id} className="border-b-0">
             <div className="bg-card p-4 rounded-lg shadow-sm mb-4 transition-all hover:shadow-md">
               <AccordionTrigger className="w-full text-left hover:no-underline p-0">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-4">
-                    {iconElement}
+                    <div className="h-6 w-6 text-primary">{subject.icon}</div>
                     <div className="flex flex-col items-start">
                         <span className="font-headline font-semibold text-lg text-card-foreground">
                             {subject.name}
