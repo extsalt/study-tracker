@@ -9,12 +9,21 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import type { Subject } from "@/types";
+import type { SubjectData, IconName } from "@/types";
 import { Label } from "./ui/label";
 import React from "react";
+import { BookOpen, Landmark, Scale, Globe, ScrollText, type LucideProps } from "lucide-react";
+
+const iconMap: Record<IconName, React.ComponentType<LucideProps>> = {
+  BookOpen,
+  Landmark,
+  Scale,
+  Globe,
+  ScrollText,
+};
 
 interface SubjectAccordionProps {
-  subjects: Subject[];
+  subjects: SubjectData[];
   onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void;
 }
 
@@ -25,6 +34,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
         const completedTopics = subject.topics.filter((t) => t.completed).length;
         const totalTopics = subject.topics.length;
         const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
+        const Icon = iconMap[subject.icon];
         
         return (
           <AccordionItem value={subject.id} key={subject.id} className="border-b-0">
@@ -32,7 +42,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
               <AccordionTrigger className="w-full text-left hover:no-underline p-0">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-4">
-                    <div className="h-6 w-6 text-primary">{subject.icon}</div>
+                    {Icon && <Icon className="h-6 w-6 text-primary" />}
                     <div className="flex flex-col items-start">
                         <span className="font-headline font-semibold text-lg text-card-foreground">
                             {subject.name}

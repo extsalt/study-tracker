@@ -1,13 +1,11 @@
 
-import type { Subject } from "@/types";
-import { BookOpen, Landmark, Scale, Globe, ScrollText } from "lucide-react";
-import React from "react";
+import type { SubjectData } from "@/types";
 
-export const initialData: Subject[] = [
+export const initialData: SubjectData[] = [
   {
     id: "history",
     name: "History",
-    icon: <ScrollText />,
+    icon: "ScrollText",
     topics: [
       { id: "hist-1", name: "Ancient India: Indus Valley Civilization", completed: false },
       { id: "hist-2", name: "Ancient India: Vedic Period", completed: false },
@@ -22,7 +20,7 @@ export const initialData: Subject[] = [
   {
     id: "polity",
     name: "Polity & Constitution",
-    icon: <Landmark />,
+    icon: "Landmark",
     topics: [
       { id: "pol-1", name: "Making of the Constitution", completed: false },
       { id: "pol-2", name: "Preamble, Union & its Territory, Citizenship", completed: false },
@@ -36,7 +34,7 @@ export const initialData: Subject[] = [
   {
     id: "geography",
     name: "Geography",
-    icon: <Globe />,
+    icon: "Globe",
     topics: [
       { id: "geo-1", name: "Physical Geography: Geomorphology", completed: false },
       { id: "geo-2", name: "Physical Geography: Climatology", completed: false },
@@ -50,7 +48,7 @@ export const initialData: Subject[] = [
   {
     id: "economy",
     name: "Economy",
-    icon: <Scale />,
+    icon: "Scale",
     topics: [
       { id: "eco-1", name: "Basics of Indian Economy", completed: false },
       { id: "eco-2", name: "National Income Accounting", completed: false },
@@ -64,7 +62,7 @@ export const initialData: Subject[] = [
   {
     id: "csat",
     name: "CSAT",
-    icon: <BookOpen />,
+    icon: "BookOpen",
     topics: [
         { id: "csat-1", name: "Comprehension", completed: false },
         { id: "csat-2", name: "Interpersonal skills including communication skills", completed: false },

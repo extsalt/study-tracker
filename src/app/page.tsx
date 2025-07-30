@@ -4,13 +4,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { initialData } from "@/data/initial-data.tsx";
-import type { Subject } from "@/types";
+import type { SubjectData } from "@/types";
 import ProgressChart from "@/components/progress-chart";
 import SubjectAccordion from "@/components/subject-accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
-  const [subjects, setSubjects] = useLocalStorage<Subject[]>("subjects", initialData);
+  const [subjects, setSubjects] = useLocalStorage<SubjectData[]>("subjects", initialData);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
