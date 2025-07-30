@@ -23,7 +23,14 @@ export default function Home() {
         const newTopics = subject.topics.map(topic => {
             const findAndToggle = (t: Topic): Topic => {
                 if (t.id === topicId) {
-                    return { ...t, completed };
+                    const toggleChildren = (childTopics: Topic[] | undefined, status: boolean): Topic[] | undefined => {
+                        return childTopics?.map(child => ({
+                            ...child,
+                            completed: status,
+                            subTopics: toggleChildren(child.subTopics, status)
+                        }));
+                    }
+                    return { ...t, completed, subTopics: toggleChildren(t.subTopics, completed) };
                 }
                 if (t.subTopics) {
                     return { ...t, subTopics: t.subTopics.map(findAndToggle) };
@@ -55,19 +62,50 @@ export default function Home() {
 
     const countTopics = (topics: Topic[]) => {
       topics.forEach(topic => {
-        totalTopics++;
-        if (topic.completed) {
-          completedTopics++;
+        if (!topic.subTopics || topic.subTopics.length === 0) {
+            totalTopics++;
+            if (topic.completed) {
+                completedTopics++;
+            }
         }
         if (topic.subTopics) {
           countTopics(topic.subTopics);
         }
       });
     };
-
+    
     subjects.forEach(subject => countTopics(subject.topics));
+    
+    const countCompletedTopicsOnly = (topics: Topic[]) => {
+        let count = 0;
+        topics.forEach(topic => {
+            if (topic.completed) {
+                count++;
+            }
+            if(topic.subTopics){
+                count += countCompletedTopicsOnly(topic.subTopics);
+            }
+        });
+        return count;
+    };
 
-    const progress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
+    let grandTotalTopics = 0;
+    const countAllTopics = (topics: Topic[]) => {
+        let count = 0;
+        topics.forEach(topic => {
+            count++;
+            if(topic.subTopics){
+                count += countAllTopics(topic.subTopics);
+            }
+        });
+        return count;
+    }
+    subjects.forEach(subject => grandTotalTopics += countAllTopics(subject.topics));
+    let grandCompletedTopics = 0;
+    subjects.forEach(subject => grandCompletedTopics += countCompletedTopicsOnly(subject.topics));
+
+
+    const progress = grandTotalTopics > 0 ? (grandCompletedTopics / grandTotalTopics) * 100 : 0;
 
     let inProgressSubjects = 0;
     let backlogSubjects = 0;
@@ -92,8 +130,8 @@ export default function Home() {
     });
 
     return {
-      totalTopics,
-      completedTopics,
+      totalTopics: grandTotalTopics,
+      completedTopics: grandCompletedTopics,
       progress,
       inProgressSubjects,
       backlogSubjects,

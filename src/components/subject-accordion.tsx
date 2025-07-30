@@ -31,7 +31,7 @@ interface SubjectAccordionProps {
 const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { topic: Topic, subjectId: string, onTopicToggle: (subjectId: string, topicId: string, completed: boolean) => void, isSubTopic?: boolean }) => {
   return (
     <div className="flex flex-col">
-      <div className={`flex items-center space-x-3 rounded-md p-3 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
+      <div className={`flex items-center space-x-3 rounded-md p-2 transition-colors hover:bg-secondary/50 ${isSubTopic ? 'ml-6' : ''}`}>
         <Checkbox
           id={`${subjectId}-${topic.id}`}
           checked={topic.completed}
@@ -41,7 +41,7 @@ const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { to
         />
         <Label
           htmlFor={`${subjectId}-${topic.id}`}
-          className={`text-sm ${
+          className={`text-sm cursor-pointer ${
             topic.completed ? "text-muted-foreground line-through" : ""
           }`}
         >
@@ -49,7 +49,7 @@ const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic = false }: { to
         </Label>
       </div>
       {topic.subTopics && (
-        <div className="space-y-2">
+        <div className="space-y-1 pl-6">
           {topic.subTopics.map((subTopic) => (
             <TopicItem key={subTopic.id} topic={subTopic} subjectId={subjectId} onTopicToggle={onTopicToggle} isSubTopic={true} />
           ))}
@@ -98,7 +98,7 @@ export default function SubjectAccordion({ subjects, onTopicToggle }: SubjectAcc
               </AccordionTrigger>
               <Progress value={progress} className="mt-2 h-2" />
               <AccordionContent className="pt-6">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {subject.topics.map((topic) => (
                     <TopicItem key={topic.id} topic={topic} subjectId={subject.id} onTopicToggle={onTopicToggle} />
                   ))}
