@@ -422,6 +422,102 @@ export const initialData: SubjectData[] = [
     ],
   },
   {
+    id: "ethics",
+    name: "Ethics, Integrity & Aptitude",
+    icon: "ScrollText",
+    topics: [
+      {
+        id: "ethics-1",
+        name: "Ethics and Human Interface",
+        completed: false,
+        subTopics: [
+          { id: "ethics-1-1", name: "Essence, determinants and consequences of Ethics in human actions", completed: false },
+          { id: "ethics-1-2", name: "Dimensions of ethics", completed: false },
+          { id: "ethics-1-3", name: "Ethics in private and public relationships", completed: false },
+          { id: "ethics-1-4", name: "Human Values – lessons from lives and teachings of great leaders, reformers and administrators", completed: false },
+          { id: "ethics-1-5", name: "Role of family, society and educational institutions in inculcating values", completed: false },
+        ]
+      },
+      {
+        id: "ethics-2",
+        name: "Attitude",
+        completed: false,
+        subTopics: [
+          { id: "ethics-2-1", name: "Content, structure, function of attitude", completed: false },
+          { id: "ethics-2-2", name: "Influence of attitude on thought and behaviour", completed: false },
+          { id: "ethics-2-3", name: "Relation of attitude to thought and behaviour", completed: false },
+          { id: "ethics-2-4", name: "Moral and political attitudes", completed: false },
+          { id: "ethics-2-5", name: "Social influence and persuasion", completed: false },
+        ]
+      },
+      {
+        id: "ethics-3",
+        name: "Aptitude and Foundational Values for Civil Service",
+        completed: false,
+        subTopics: [
+          { id: "ethics-3-1", name: "Integrity, impartiality and non-partisanship", completed: false },
+          { id: "ethics-3-2", name: "Objectivity, dedication to public service", completed: false },
+          { id: "ethics-3-3", name: "Empathy, tolerance and compassion towards the weaker sections", completed: false },
+        ]
+      },
+      {
+        id: "ethics-4",
+        name: "Emotional Intelligence",
+        completed: false,
+        subTopics: [
+          { id: "ethics-4-1", name: "Concepts of Emotional Intelligence", completed: false },
+          { id: "ethics-4-2", name: "Utilities and application of emotional intelligence in administration and governance", completed: false },
+        ]
+      },
+      {
+        id: "ethics-5",
+        name: "Contributions of Moral Thinkers and Philosophers",
+        completed: false,
+        subTopics: [
+          { id: "ethics-5-1", name: "Contributions of moral thinkers and philosophers from India", completed: false },
+          { id: "ethics-5-2", name: "Contributions of moral thinkers and philosophers from the world", completed: false },
+        ]
+      },
+      {
+        id: "ethics-6",
+        name: "Public/Civil Service Values and Ethics in Public Administration",
+        completed: false,
+        subTopics: [
+          { id: "ethics-6-1", name: "Status and problems of public/civil service values", completed: false },
+          { id: "ethics-6-2", name: "Ethical concerns and dilemmas in government and private institutions", completed: false },
+          { id: "ethics-6-3", name: "Laws, rules, regulations and conscience as sources of ethical guidance", completed: false },
+          { id: "ethics-6-4", name: "Accountability and ethical governance", completed: false },
+          { id: "ethics-6-5", name: "Strengthening of ethical and moral values in governance", completed: false },
+          { id: "ethics-6-6", name: "Ethical issues in international relations and funding", completed: false },
+          { id: "ethics-6-7", name: "Corporate governance", completed: false },
+        ]
+      },
+      {
+        id: "ethics-7",
+        name: "Probity in Governance",
+        completed: false,
+        subTopics: [
+          { id: "ethics-7-1", name: "Concept of public service", completed: false },
+          { id: "ethics-7-2", name: "Philosophical basis of governance and probity", completed: false },
+          { id: "ethics-7-3", name: "Information sharing and transparency in government, Right to Information", completed: false },
+          { id: "ethics-7-4", name: "Codes of Ethics, Codes of Conduct", completed: false },
+          { id: "ethics-7-5", name: "Citizen's Charters", completed: false },
+          { id: "ethics-7-6", name: "Work culture, Quality of service delivery", completed: false },
+          { id: "ethics-7-7", name: "Utilization of public funds", completed: false },
+          { id: "ethics-7-8", name: "Challenges of corruption", completed: false },
+        ]
+      },
+      {
+        id: "ethics-8",
+        name: "Case Studies on Above Issues",
+        completed: false,
+        subTopics: [
+          { id: "ethics-8-1", name: "Practice analyzing and solving case studies related to ethical dilemmas", completed: false },
+        ]
+      },
+    ]
+  },
+  {
     id: "csat",
     name: "CSAT",
     icon: "BookOpen",
