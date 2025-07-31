@@ -552,4 +552,102 @@ export const initialData: SubjectData[] = [
         ]},
     ],
   },
+  {
+    id: "sociology",
+    name: "Sociology",
+    icon: "BookOpen",
+    topics: [
+      { 
+        id: "soc-1", 
+        name: "Sociology - The Discipline", 
+        completed: false,
+        subTopics: [
+          { id: "soc-1-1", name: "Modernity and social changes in Europe and emergence of sociology", completed: false },
+          { id: "soc-1-2", name: "Scope of the subject and comparison with other social sciences", completed: false },
+          { id: "soc-1-3", name: "Sociology and common sense", completed: false },
+        ]
+      },
+      { 
+        id: "soc-2", 
+        name: "Sociology as Science", 
+        completed: false,
+        subTopics: [
+            { id: "soc-2-1", name: "Science, scientific method and critique", completed: false },
+            { id: "soc-2-2", name: "Major theoretical strands of research methodology", completed: false },
+            { id: "soc-2-3", name: "Positivism and its critique", completed: false },
+            { id: "soc-2-4", name: "Fact value and objectivity", completed: false },
+            { id: "soc-2-5", name: "Non-positivist methodologies", completed: false },
+        ]
+      },
+      { 
+        id: "soc-3", 
+        name: "Research Methods and Analysis", 
+        completed: false,
+        subTopics: [
+          { id: "soc-3-1", name: "Qualitative and quantitative methods", completed: false },
+          { id: "soc-3-2", name: "Techniques of data collection", completed: false },
+          { id: "soc-3-3", name: "Variables, sampling, hypothesis, reliability and validity", completed: false },
+        ]
+      },
+      { 
+        id: "soc-4", 
+        name: "Sociological Thinkers", 
+        completed: false,
+        subTopics: [
+          { id: "soc-4-1", name: "Karl Marx: Historical materialism, mode of production, alienation, class struggle", completed: false },
+          { id: "soc-4-2", name: "Emile Durkheim: Division of labour, social fact, suicide, religion and society", completed: false },
+          { id: "soc-4-3", name: "Max Weber: Social action, ideal types, authority, bureaucracy, protestant ethic and the spirit of capitalism", completed: false },
+          { id: "soc-4-4", name: "Talcott Parsons: Social system, pattern variables", completed: false },
+          { id: "soc-4-5", name: "Robert K. Merton: Latent and manifest functions, conformity and deviance, reference groups", completed: false },
+          { id: "soc-4-6", name: "Mead: Self and identity", completed: false },
+        ]
+      },
+      { 
+        id: "soc-5", 
+        name: "Stratification and Mobility", 
+        completed: false,
+        subTopics: [
+          { id: "soc-5-1", name: "Concepts: equality, inequality, hierarchy, exclusion, poverty and deprivation", completed: false },
+          { id: "soc-5-2", name: "Theories of social stratification: Structural functionalist theory, Marxist theory, Weberian theory", completed: false },
+          { id: "soc-5-3", name: "Dimensions: social stratification of class, status groups, gender, ethnicity and race", completed: false },
+          { id: "soc-5-4", name: "Social mobility: open and closed systems, types of mobility, sources and causes of mobility", completed: false },
+        ]
+      },
+      { 
+        id: "soc-6", 
+        name: "Works and Economic Life", 
+        completed: false,
+        subTopics: [
+          { id: "soc-6-1", name: "Social organization of work in different types of society", completed: false },
+          { id: "soc-6-2", name: "Formal and informal organization of work", completed: false },
+          { id: "soc-6-3", name: "Labour and society", completed: false },
+        ]
+      },
+      { id: "soc-7", name: "Politics and Society", completed: false, subTopics: [
+        { id: "soc-7-1", name: "Sociological theories of power", completed: false },
+        { id: "soc-7-2", name: "Power elite, bureaucracy, pressure groups, and political parties", completed: false },
+        { id: "soc-7-3", name: "Nation, state, citizenship, democracy, civil society, ideology", completed: false },
+        { id: "soc-7-4", name: "Protest, agitation, social movements, collective action, revolution", completed: false },
+      ]},
+      { id: "soc-8", name: "Religion and Society", completed: false, subTopics: [
+        { id: "soc-8-1", name: "Sociological theories of religion", completed: false },
+        { id: "soc-8-2", name: "Types of religious practices: animism, monism, pluralism, sects, cults", completed: false },
+        { id: "soc-8-3", name: "Religion in modern society: religion and science, secularization, religious revivalism, fundamentalism", completed: false },
+      ]},
+      { id: "soc-9", name: "Systems of Kinship", completed: false, subTopics: [
+        { id: "soc-9-1", name: "Family, household, marriage", completed: false },
+        { id: "soc-9-2", name: "Types and forms of family", completed: false },
+        { id: "soc-9-3", name: "Lineage and descent", completed: false },
+        { id: "soc-9-4", name: "Patriarchy and sexual division of labour", completed: false },
+        { id: "soc-9-5", name: "Contemporary trends", completed: false },
+      ]},
+      { id: "soc-10", name: "Social Change in Modern Society", completed: false, subTopics: [
+        { id: "soc-10-1", name: "Sociological theories of social change", completed: false },
+        { id: "soc-10-2", name: "Development and dependency", completed: false },
+        { id: "soc-10-3", name: "Agents of social change", completed: false },
+        { id: "soc-10-4", name: "Education and social change", completed: false },
+        { id: "soc-10-5", name: "Science, technology and social change", completed: false },
+      ]},
+    ],
+  },
 ];

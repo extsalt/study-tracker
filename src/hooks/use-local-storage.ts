@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // By incrementing this version, we can force all users to get the new initialData.
-const DATA_VERSION = 3; 
+const DATA_VERSION = 5; 
 
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
   const [storedValue, setStoredValue] = useState<T>(initialValue);
