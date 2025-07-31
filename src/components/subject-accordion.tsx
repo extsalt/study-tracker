@@ -54,7 +54,7 @@ const TopicItem = ({ topic, subjectId, onTopicToggle, isSubTopic }: TopicItemPro
         </Label>
       </div>
       {hasSubTopics && (
-        <div className="space-y-1">
+        <div className="ml-6 space-y-1">
           {topic.subTopics?.map((subTopic) => (
             <TopicItem
               key={subTopic.id}
